@@ -8,6 +8,7 @@ using Spice.Models;
 
 namespace Spice.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         public IActionResult Index()
