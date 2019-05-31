@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Spice.Data;
+using Spice.Models;
 
 namespace Spice.Areas.Admin.Controllers
 {
@@ -17,9 +19,91 @@ namespace Spice.Areas.Admin.Controllers
             _db = db;
         }
 
+        //GET 
         public async Task<IActionResult> Index()
         {
+            return View(await _db.Category.ToListAsync());
+        }
+
+        //GET - CREATE
+        public IActionResult Create()
+        {
             return View();
+        }
+
+
+        //POST - CRETE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                //If valid
+                _db.Category.Add(category);
+                await _db.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
+
+        //GET -- EDIT
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id==null)
+            {
+                return NotFound();
+            }
+            var Category = await _db.Category.FindAsync(id);
+            if (Category == null)
+            {
+                return NotFound();
+            }
+            return View(Category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Update(category);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
+
+        //GET -- DELETE
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var Category = await _db.Category.FindAsync(id);
+            if (Category == null)
+            {
+                return NotFound();
+            }
+            return View(Category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var category = await _db.Category.FindAsync(id);
+
+            if (category==null)
+            {
+                return View();
+            }
+            _db.Category.Remove(category);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
