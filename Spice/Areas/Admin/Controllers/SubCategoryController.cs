@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Spice.Data;
+using Spice.Models;
 using Spice.Models.ViewModels;
 
 namespace Spice.Areas.Admin.Controllers
@@ -13,6 +15,9 @@ namespace Spice.Areas.Admin.Controllers
     public class SubCategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
+
+        [TempData]
+        public string StatusMessage { get; set; }
 
         public SubCategoryController(ApplicationDbContext db)
         {
@@ -50,6 +55,7 @@ namespace Spice.Areas.Admin.Controllers
                 if (doesSubCategoryExistis.Count() > 0)
                 {
                     //Error 
+                    StatusMessage = "Error: Sub Category exister under " + doesSubCategoryExistis.First().Category.Name + " category. Please use aonther name.";
                 }
                 else
                 {
@@ -62,9 +68,26 @@ namespace Spice.Areas.Admin.Controllers
             {
                 CategoryList = await _db.Category.ToListAsync(),
                 SubCategory = model.SubCategory,
-                SubCategoryList = await _db.SubCategory.OrderBy(p=>p.Name).Select(p=>p.Name).ToListAsync(),
+                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
+                StatusMessage = StatusMessage,
             };
             return View(modelVM);
         }
+
+        [ActionName("GetSubCategory")]
+        public async Task<IActionResult> GetSubCategory(int id)
+        {
+            List<SubCategory> subCategories = new List<SubCategory>();
+
+
+            subCategories = await (from subCategory in _db.SubCategory
+                                   where subCategory.CategoryId == id
+                                   select subCategory).ToListAsync();
+
+            return Json(new SelectList(subCategories, "Id", "Name"));
+
+        }
+
+
     }
 }
