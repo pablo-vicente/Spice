@@ -24,6 +24,11 @@
             <div class="col-5 offset-2">
                 <partial name="_CreateAndBackToListButon" />
             </div>
+        </div>
     </div>
 </form>
+
+@section Scripts{ 
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

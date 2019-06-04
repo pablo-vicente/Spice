@@ -27,7 +27,7 @@
                 <label asp-for="MenuItem.Description" class="col-form-label"></label>
             </div>
             <div class="col-5">
-                @Html.TextAreaFor(m => m.MenuItem.Description);
+                @Html.TextAreaFor(m => m.MenuItem.Description)
             </div>
             <span asp-validation-for="MenuItem.Description" class="text-danger"></span>
         </div>
@@ -80,5 +80,41 @@
                 <partial name="_CreateAndBackToListBtuton" />
             </div>
         </div>
+    </div>
 </form>
 
+@section Scripts{
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: "lists",
+            menubar: 'file edit format'
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            getSubCategory();
+             $('#CategoryId').change(function () {
+                getSubCategory();
+            });
+        });
+
+        function getSubCategory() {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+            var ddlsoruce = '#CategoryId';
+            $.getJSON(url, { id: $(ddlsoruce).val() }, function (data) {
+                var items = '';
+                $('#SubCategoryId').empty();
+                $.each(data, function (i, subcategory) {
+                    items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</options>";
+                });
+
+                $('#SubCategoryId').html(items);
+            })
+        }
+    </script>
+
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+}
