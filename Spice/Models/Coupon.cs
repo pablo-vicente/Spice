@@ -28,5 +28,7 @@ namespace Spice.Models
         public byte[] Picture { get; set; }
 
         public bool isActive { get; set; }
+
+
     }
 }
