@@ -12,22 +12,22 @@
                 {
                     <div class="carousel-item active">
                         @{
-                            //var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
-                            //var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                            var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
+                            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                         }
 
-                        <img src="@Model.Coupon.ToList()[i].Picture" height="50px" class="d-block w-100" />
+                        <img src="@imgsrc" height="50px" class="d-block w-100" />
                     </div>
                 }
                 else
                 {
                     <div class="carousel-item">
                         @{
-                            //var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
-                            //var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                            var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
+                            var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                         }
 
-                        <img src="imgsrc" height="50px" class="d-block w-100" />
+                        <img src="@imgsrc" height="50px" class="d-block w-100" />
                     </div>
                 }
             }
