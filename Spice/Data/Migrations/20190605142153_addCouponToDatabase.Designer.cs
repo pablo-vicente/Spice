@@ -10,8 +10,8 @@ using Spice.Data;
 namespace Spice.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190604171021_addCouponToDataBase")]
-    partial class addCouponToDataBase
+    [Migration("20190605142153_addCouponToDatabase")]
+    partial class addCouponToDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

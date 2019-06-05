@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Spice.Data.Migrations
 {
-    public partial class addCouponToDataBase : Migration
+    public partial class addCouponToDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
