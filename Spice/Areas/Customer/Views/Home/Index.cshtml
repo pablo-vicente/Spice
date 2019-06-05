@@ -1,7 +1,7 @@
-﻿@model  Spice.Models.ViewModels.IndexViewModel
+﻿@model Spice.Models.ViewModels.IndexViewModel
+
 
 <br />
-
 @if (Model.Coupon.ToList().Count > 0)
 {
     <div class="border">
@@ -33,4 +33,21 @@
             }
         </div>
     </div>
+
 }
+
+<br />
+<br />
+<br />
+<br />
+
+
+<div class="backgroundWhite container">
+
+    @foreach (var category in Model.Category)
+    {
+    <div class="row" id="menu-wrapper">
+        <partial name="_ThumbnailAreaPartial" model="@Model.MenuItem.Where(u=>u.Category.Name.Equals(category.Name))" />
+    </div>
+    }
+</div>
