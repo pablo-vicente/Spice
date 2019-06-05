@@ -19,6 +19,7 @@ namespace Spice.Areas.Admin.Controllers
         {
             _db = db;
         }
+
         public async Task<IActionResult> Index()
         {
             return View(await _db.Coupon.ToListAsync());
@@ -36,12 +37,12 @@ namespace Spice.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var files = HttpContext.Request.Form.Files;
-                if (files.Count() > 0)
+                if (files.Count > 0)
                 {
                     byte[] p1 = null;
                     using (var fs1 = files[0].OpenReadStream())
                     {
-                        using(var ms1 = new MemoryStream())
+                        using (var ms1 = new MemoryStream())
                         {
                             fs1.CopyTo(ms1);
                             p1 = ms1.ToArray();

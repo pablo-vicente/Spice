@@ -22,7 +22,7 @@ namespace Spice.Controllers
         }
 
         
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             IndexViewModel IndexVM = new IndexViewModel()
             {
