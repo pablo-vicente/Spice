@@ -57,20 +57,24 @@ namespace Spice.Controllers
         public async Task<IActionResult> Details(ShoppingCart CartObject)
         {
             CartObject.Id = 0;
-            if (ModelState.IsValid){
+            if (ModelState.IsValid)
+            {
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
                 CartObject.ApplicationUserId = claim.Value;
 
-                ShoppingCart cartFromdb = await _db.ShoppingCart.Where(c => c.ApplicationUserId == CartObject.ApplicationUserId && c.MenuItemId == CartObject.MenuItemId).FirstOrDefaultAsync();
+                ShoppingCart cartFromDb = await _db.ShoppingCart.Where(c => c.ApplicationUserId == CartObject.ApplicationUserId
+                                                && c.MenuItemId == CartObject.MenuItemId).FirstOrDefaultAsync();
 
-                if (cartFromdb == null)
+                
+
+                if (cartFromDb == null)
                 {
-                    await _db.ShoppingCart.AddRangeAsync(CartObject);
+                    await _db.ShoppingCart.AddAsync(CartObject);
                 }
                 else
                 {
-                    cartFromdb.Count = cartFromdb.Count + CartObject.Count;
+                    cartFromDb.Count = cartFromDb.Count + CartObject.Count;
                 }
                 await _db.SaveChangesAsync();
 
