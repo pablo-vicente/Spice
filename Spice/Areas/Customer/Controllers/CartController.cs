@@ -75,5 +75,14 @@ namespace Spice.Areas.Customer.Controllers
 
             return RedirectToAction(nameof(Index)); 
         }
+
+        public IActionResult RemoveCoupon()
+        {
+            
+            HttpContext.Session.SetString(SD.ssSCouponCode, string.Empty);
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
