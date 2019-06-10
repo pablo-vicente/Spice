@@ -53,7 +53,7 @@
                                             <label>Date: </label>
                                         </div>
                                         <div class="col-9">
-                                            <input asp-for="@Model.OrderHeader.PickUpDate" id="datepicker" type="text" class="form-control" />
+                                            <input asp-for="@Model.OrderHeader.PickUpDate" id="datepicker" value="" type="text" class="form-control" />
                                         </div>
                                     </div>
 
@@ -62,7 +62,7 @@
                                             <label>Time: </label>
                                         </div>
                                         <div class="col-9">
-                                            <input asp-for="@Model.OrderHeader.PickUpTime" id="timepicker" type="text" class="form-control" />
+                                            <input asp-for="@Model.OrderHeader.PickUpTime" id="timepicker" value="" type="text" class="form-control" />
                                         </div>
                                     </div>
 
@@ -89,7 +89,7 @@
                                             <li class="list-group-item d-flex justify-content-between">
                                                 <div>
                                                     <h6 class="my-0">@details.MenuItem.Name</h6>
-                                                    <small class="text-muted">Quantity: @details.Count</small>
+                                                    <small class="text-success">Quantity: @details.Count</small>
                                                 </div>
                                                 <span class="text-muted">$@(details.MenuItem.Price * details.Count)</span>
                                                 @{ total += (details.MenuItem.Price * details.Count);}
@@ -107,7 +107,7 @@
                                         }
                                         <li class="list-group-item d-flex justify-content-between bg-light">
                                             <small class="text-info">Total (USD)</small>
-                                            <span class="text-info">$@(Model.OrderHeader.OrderTotal)</span>
+                                            <strong><span class="text-info">$@(Model.OrderHeader.OrderTotal)</span></strong>
                                         </li>
                                     </ul>
                                 </div>
@@ -128,17 +128,12 @@
 </form>
 
 @section Scripts{
+
+
     <script>
         $(function () {
-            var couponCode = document.getElementById("txtCouponCode").value;
-            if (couponCode.length > 0) {
-                document.getElementById('btnCoupon').style.display = 'none';
-                document.getElementById('btnRemoveCoupon').style.display = '';
-            }
-            else {
-                document.getElementById('btnCoupon').style.display = '';
-                document.getElementById('btnRemoveCoupon').style.display = 'none';
-            }
+            $("#datepicker").datepicker({ minDate: 0, maxDate: "+1W" });
+            
         });
     </script>
 
