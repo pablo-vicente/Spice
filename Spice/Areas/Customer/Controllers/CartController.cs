@@ -187,14 +187,14 @@ namespace Spice.Areas.Customer.Controllers
 
                 var charge = charges.Create(new ChargeCreateOptions
                 {
-                    Amount = Convert.ToInt32(detailCart.OrderHeader.OrderTotal*100),
+                    Amount = Convert.ToInt32(detailCart.OrderHeader.OrderTotal * 100),
                     Description = "Order ID: " + detailCart.OrderHeader.Id,
                     Currency = "usd",
                     CustomerId = customer.Id
                 });
 
                 detailCart.OrderHeader.TransactionId = charge.BalanceTransactionId;
-                if (charge.Status.ToLower()=="succeeded")
+                if (charge.Status.ToLower() == "succeeded")
                 {
                     //email for successfull
                     detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
@@ -211,66 +211,90 @@ namespace Spice.Areas.Customer.Controllers
             }
             await _db.SaveChangesAsync();
             //return RedirectToAction("Index", "Home");
-            return RedirectToPage("Confirm", "Order", new { id = detailCart.OrderHeader.Id});
+            return RedirectToPage("Confirm", "Order", new { id = detailCart.OrderHeader.Id });
         }
 
-            public IActionResult AddCoupon()
+        public IActionResult AddCoupon()
+        {
+            if (detailCart.OrderHeader.CouponCode == null)
             {
-                if (detailCart.OrderHeader.CouponCode == null)
-                {
-                    detailCart.OrderHeader.CouponCode = "";
-                }
-                HttpContext.Session.SetString(SD.ssCouponCode, detailCart.OrderHeader.CouponCode);
-
-                return RedirectToAction(nameof(Index));
+                detailCart.OrderHeader.CouponCode = "";
             }
+            HttpContext.Session.SetString(SD.ssCouponCode, detailCart.OrderHeader.CouponCode);
 
-            public IActionResult RemoveCoupon()
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveCoupon()
+        {
+
+            HttpContext.Session.SetString(SD.ssCouponCode, string.Empty);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Plus(int cartId)
+        {
+            var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);
+            cart.Count += 1;
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Minus(int cartId)
+        {
+            var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);
+            if (cart.Count == 1)
             {
-
-                HttpContext.Session.SetString(SD.ssCouponCode, string.Empty);
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            public async Task<IActionResult> Plus(int cartId)
-            {
-                var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);
-                cart.Count += 1;
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-            public async Task<IActionResult> Minus(int cartId)
-            {
-                var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);
-                if (cart.Count == 1)
-                {
-                    _db.ShoppingCart.Remove(cart);
-                    await _db.SaveChangesAsync();
-
-                    var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
-                    HttpContext.Session.SetInt32(SD.ssShoppintCartCount, cnt);
-                }
-                else
-                {
-                    cart.Count -= 1;
-                    await _db.SaveChangesAsync();
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            public async Task<IActionResult> Remove(int cartId)
-            {
-                var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);
                 _db.ShoppingCart.Remove(cart);
                 await _db.SaveChangesAsync();
 
                 var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
                 HttpContext.Session.SetInt32(SD.ssShoppintCartCount, cnt);
-
-                return RedirectToAction(nameof(Index));
             }
+            else
+            {
+                cart.Count -= 1;
+                await _db.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Remove(int cartId)
+        {
+            var cart = await _db.ShoppingCart.FirstOrDefaultAsync(c => c.Id == cartId);
+            _db.ShoppingCart.Remove(cart);
+            await _db.SaveChangesAsync();
+
+            var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
+            HttpContext.Session.SetInt32(SD.ssShoppintCartCount, cnt);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [authorize]
+        public async Task<IActionResult> OrderHistory()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+
+
+            List<OrderDetailsViewModel> orderList = new List<OrderDetailsViewModel>();
+
+            List<OrderHeader> orderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u => u.UserId == claim.Value).ToListAsync();
+
+            foreach (OrderHeader item in orderHeaderList)
+            {
+                OrderDetailsViewModel individual = new OrderDetailsViewModel
+                {
+                    OrderHeader = item,
+                    OrderDetails = await _db.OrderDetails.Where(o=>o.OrderId ==item.Id).ToListAsync()
+                };
+                orderList.Add(individual);
+            }
+            return View(orderList);
         }
     }
+}
