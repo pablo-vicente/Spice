@@ -47,7 +47,7 @@ namespace Spice
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.Configure<StripSettings>(Configuration.GetSection("Stipe"));
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

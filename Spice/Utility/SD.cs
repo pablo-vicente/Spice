@@ -16,7 +16,7 @@ namespace Spice.Utility
         public const string CustomerEndUser = "Customer";
         public const string ssShoppintCartCount = "ssCartCount";
 
-        public const string ssSCouponCode = "ssCouponCode";
+        public const string ssCouponCode = "ssCouponCode";
 
         public const string StatusSubmitted = "Submitted";
         public const string StatusInProcess = "Being Prepared";

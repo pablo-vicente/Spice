@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Spice.Utility
 {
-    public class StripSettings
+    public class StripeSettings
     {
         public string SecretKey { get; set; }
         public string PublishableKey { get; set; }

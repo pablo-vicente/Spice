@@ -1,7 +1,7 @@
 ﻿@model Spice.Models.ViewModels.OrderDetailsCart
 @using Microsoft.Extensions.Options
 
-@inject IOptions<Spice.Utility.StripSettings> Stripe
+@inject IOptions<Spice.Utility.StripeSettings> Stripe
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -121,7 +121,7 @@
                         <div class="row">
                             <div class="col-12 col-md-4 offset-md-8">
 
-                                @{ 
+                                @{
                                     var OrderTotalForStrip = Model.OrderHeader.OrderTotal * 100;
                                 }
 
@@ -133,8 +133,8 @@
                                         data-description="Good Food, Good Mood."
                                         data-locale="auto"
                                         data-allow-remember-me="false"
-                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                                        >
+                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+
                                 </script>
                                 <script>
                                     document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
