@@ -210,8 +210,8 @@ namespace Spice.Areas.Customer.Controllers
                 detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusRejected;
             }
             await _db.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
-            //return RedirectToPage("Confirm", "Order", new { id = detailCart.OrderHeader.Id});
+            //return RedirectToAction("Index", "Home");
+            return RedirectToPage("Confirm", "Order", new { id = detailCart.OrderHeader.Id});
         }
 
             public IActionResult AddCoupon()
