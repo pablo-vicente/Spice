@@ -25,7 +25,7 @@ namespace Spice.Models
         public double OrderTotalOriginal { get; set; }
 
         [Required]
-        [DisplayFormat(DataFormatString = "{0:C)")]
+        [DisplayFormat(DataFormatString = "{0:$ #,##0.00;0}")]// "{0:C2)")]
         [Display(Name = "Order Total")]
         public double OrderTotal { get; set; }
 
