@@ -56,7 +56,10 @@
                             @Html.DisplayFor(m => item.OrderHeader.PickUpTime)
                         </td>
                         <td>
-                            <!--@Html.DisplayFor(m => item.OrderHeader.OrderTotal)-->
+                            <!--html.DisplayFor(m => item.OrderHeader.OrderTotal)-->
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.OrderDetails.Count)
                         </td>
                     </tr>
                 }
