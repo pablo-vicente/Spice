@@ -42,7 +42,7 @@ namespace Spice.Models
         public double CouponCodeDiscount { get; set; }
         public string Status { get; set; }
         public string PaymentStatus { get; set; }
-        public string Coments { get; set; }
+        public string Comments { get; set; }
 
         [Display(Name ="Pickup Name")]
         public string PickupName { get; set; }
