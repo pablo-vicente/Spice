@@ -15,6 +15,6 @@ namespace Spice.Models
 
         public int totalPage => (int)Math.Ceiling((decimal)TotalItem / ItemsPeerPage);
 
-        public string urlParam { get; set; };
+        public string urlParam { get; set; }
     }
 }
