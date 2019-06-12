@@ -81,11 +81,11 @@
                                     Order
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
-                                    @if (User.IsInRole(SD.KitchenUser) | User.IsInRole(SD.ManagerUser))
+                                    @if (User.IsInRole(SD.KitchenUser) || User.IsInRole(SD.ManagerUser))
                                     {
                                         <a class="dropdown-item" asp-action="ManagerOrder" asp-controller="Order" asp-area="Customer">Manage Order</a>
                                     }
-                                    @if (User.IsInRole(SD.FrontDeskUser) | User.IsInRole(SD.ManagerUser))
+                                    @if (User.IsInRole(SD.FrontDeskUser) || User.IsInRole(SD.ManagerUser))
                                     {
                                         <a class="dropdown-item" asp-action="OrderPickup" asp-controller="Order" asp-area="Customer">Order Pickup</a>
                                     }

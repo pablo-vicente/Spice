@@ -92,9 +92,7 @@ namespace Spice.Areas.Customer.Controllers
 
             List<OrderDetailsViewModel> orderDetailsVM = new List<OrderDetailsViewModel>();
 
-
-
-            List<OrderHeader> orderHeaderList = await _db.OrderHeader.Where(o=>o.Status==SD.StatusSubmitted || o.Status==SD.StatusInProcess).OrderByDescending(o=>o.PickUpTime).ToListAsync();
+            List<OrderHeader> orderHeaderList = await _db.OrderHeader.Where(o => o.Status == SD.StatusSubmitted || o.Status == SD.StatusInProcess).OrderByDescending(o => o.PickUpTime).ToListAsync();
 
             foreach (OrderHeader item in orderHeaderList)
             {
@@ -106,7 +104,7 @@ namespace Spice.Areas.Customer.Controllers
                 orderDetailsVM.Add(individual);
             }
 
-            return View(orderDetailsVM.OrderBy(o=>o.OrderHeader.PickUpTime));
+            return View(orderDetailsVM.OrderBy(o => o.OrderHeader.PickUpTime));
         }
 
 

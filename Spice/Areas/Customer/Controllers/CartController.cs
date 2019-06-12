@@ -123,6 +123,7 @@ namespace Spice.Areas.Customer.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
+
             detailCart.listCart = await _db.ShoppingCart.Where(c => c.ApplicationUserId == claim.Value).ToListAsync();
 
             detailCart.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
@@ -211,7 +212,7 @@ namespace Spice.Areas.Customer.Controllers
             }
             await _db.SaveChangesAsync();
             //return RedirectToAction("Index", "Home");
-            return RedirectToPage("Confirm", "Order", new { id = detailCart.OrderHeader.Id });
+            return RedirectToAction("Confirm", "Order", new { id = detailCart.OrderHeader.Id });
         }
 
         public IActionResult AddCoupon()
