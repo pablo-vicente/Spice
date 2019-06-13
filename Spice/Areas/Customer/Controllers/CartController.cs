@@ -134,7 +134,7 @@ namespace Spice.Areas.Customer.Controllers
 
             List<OrderDetails> orderDetailsList = new List<OrderDetails>();
             _db.OrderHeader.Add(detailCart.OrderHeader);
-            await _db.SaveChangesAsync();
+            //await _db.SaveChangesAsync();
 
             detailCart.OrderHeader.OrderTotalOriginal = 0;
 
@@ -169,7 +169,7 @@ namespace Spice.Areas.Customer.Controllers
             detailCart.OrderHeader.CouponCodeDiscount = detailCart.OrderHeader.OrderTotalOriginal - detailCart.OrderHeader.OrderTotal;
 
             _db.ShoppingCart.RemoveRange(detailCart.listCart);
-            HttpContext.Session.SetInt32(SD.ssShoppintCartCount, 0);
+            HttpContext.Session.SetInt32(SD.ssShoppingCartCount, 0);
             await _db.SaveChangesAsync();
 
 
@@ -251,7 +251,7 @@ namespace Spice.Areas.Customer.Controllers
                 await _db.SaveChangesAsync();
 
                 var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
-                HttpContext.Session.SetInt32(SD.ssShoppintCartCount, cnt);
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
             }
             else
             {
@@ -269,7 +269,7 @@ namespace Spice.Areas.Customer.Controllers
             await _db.SaveChangesAsync();
 
             var cnt = _db.ShoppingCart.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
-            HttpContext.Session.SetInt32(SD.ssShoppintCartCount, cnt);
+            HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
 
             return RedirectToAction(nameof(Index));
         }

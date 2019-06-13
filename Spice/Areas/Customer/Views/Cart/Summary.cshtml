@@ -56,7 +56,7 @@
                                             <label>Date: </label>
                                         </div>
                                         <div class="col-9">
-                                            <input asp-for="@Model.OrderHeader.PickUpDate" id="datepicker" value="" type="text" class="form-control" />
+                                            <input asp-for="@Model.OrderHeader.PickUpDate" asp-format="{0:dd/MM/yyyy}" id="datepicker" value="" type="text"  class="form-control" />
                                         </div>
                                     </div>
 
@@ -65,7 +65,7 @@
                                             <label>Time: </label>
                                         </div>
                                         <div class="col-9">
-                                            <input asp-for="@Model.OrderHeader.PickUpTime" id="timepicker" value="" type="text" class="form-control" />
+                                            <input asp-for="@Model.OrderHeader.PickUpTime" id="timepicker" value="" type="text"  class=" form-control" />
                                         </div>
                                     </div>
 
@@ -153,6 +153,7 @@
     }
 </form>
 
+
 @section Scripts{
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js"></script>
@@ -165,7 +166,7 @@
                 minDt = 1;
             }
 
-            $("#datepicker").datepicker({ minDate: minDt, maxDate: "+1W" });
+            $("#datepicker").datepicker({ minDate: minDt, maxDate: "+1W", dateFormat: 'dd/mm/yy'});
             $("#timepicker").timepicker({ 'minTime': '11:00 AM', 'maxTime': '9:00 PM', step: '30' })
         });
 
