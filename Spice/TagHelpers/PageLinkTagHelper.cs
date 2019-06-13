@@ -14,11 +14,11 @@ namespace Spice.TagHelpers
     [HtmlTargetElement("div", Attributes ="page-model")]
     public class PageLinkTagHelper : TagHelper
     {
-        private IUrlHelperFactory UrlHelperFactory;
+        private IUrlHelperFactory urlHelperFactory;
 
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
-            UrlHelperFactory = helperFactory;
+            urlHelperFactory = helperFactory;
         }
 
         [ViewContext]
@@ -35,7 +35,7 @@ namespace Spice.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            IUrlHelper urlHelper = UrlHelperFactory.GetUrlHelper(ViewContext);
+            IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
 
             for (int i=1;i <= PageModel.totalPage; i++)
