@@ -134,7 +134,7 @@ namespace Spice.Areas.Customer.Controllers
 
             List<OrderDetails> orderDetailsList = new List<OrderDetails>();
             _db.OrderHeader.Add(detailCart.OrderHeader);
-            //await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             detailCart.OrderHeader.OrderTotalOriginal = 0;
 
