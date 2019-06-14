@@ -51,6 +51,12 @@ namespace Spice
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = "581243149004490";
+                facebookOptions.AppSecret = "a72e3bebaa552f73d3d52af4de3883d7";
+            });
+
             services.AddSession(options =>
             {
                 options.Cookie.IsEssential = true;
