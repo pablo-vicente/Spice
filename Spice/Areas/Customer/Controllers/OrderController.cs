@@ -156,8 +156,9 @@ namespace Spice.Areas.Customer.Controllers
         [Authorize]
         public async Task<IActionResult> OrderPickup(int productPage = 1, string searchName = null, string searchPhone = null, string searchEmail = null)
         {
-            //var claimsIdentity = (ClaimsIdentity)User.Identity;
-            //var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+        //var claimsIdentity = (ClaimsIdentity)User.Identity;
+        //var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
 
             OrderListViewModel orderListVM = new OrderListViewModel()
@@ -192,20 +193,20 @@ namespace Spice.Areas.Customer.Controllers
 
                 if (searchName != null)
                 {
-                    OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u => u.PickupName.ToLower().Contains(searchName.ToLower()) && u.Status == SD.StatusReady).OrderByDescending(o=>o.OrderDate).ToListAsync();
+                    OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u => u.PickupName.ToLower().Trim().Contains(searchName.ToLower()) && u.Status == SD.StatusReady).OrderByDescending(o=>o.OrderDate).ToListAsync();
                 }
                 else
                 {
                     if (searchEmail != null)
                     {
-                        user = await _db.ApplicationUser.Where(u => u.Email.ToLower().Contains(searchEmail.ToLower())).FirstOrDefaultAsync();
+                        user = await _db.ApplicationUser.Where(u => u.Email.ToLower().Contains(searchEmail.ToLower().Trim())).FirstOrDefaultAsync();
                         OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(o => o.UserId == user.Id && o.Status == SD.StatusReady).OrderByDescending(o => o.OrderDate).ToListAsync();
                     }
                     else
                     {
                         if (searchPhone != null)
                         {
-                            OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u =>u.PhoneNumber.Contains(searchPhone) && u.Status==SD.StatusReady).OrderByDescending(o => o.OrderDate).ToListAsync();
+                            OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u =>u.PhoneNumber.Trim().Contains(searchPhone) && u.Status==SD.StatusReady).OrderByDescending(o => o.OrderDate).ToListAsync();
                         }
                     }
                 }
