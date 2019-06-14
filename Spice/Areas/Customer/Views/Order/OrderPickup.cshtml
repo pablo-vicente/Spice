@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <form method="post">
+    <form method="get">
 
         <br /><br />
         <h2 class="text-info">Orders Ready For Pickup: </h2>
 
         <div class="border backgroundWhite">
-            <div class="container border border-secondary" style="height:60px;"> 
+            <div class="container border border-secondary" style="height:60px;">
                 <div class="row container">
                     <div class="col-11">
                         <div class="row" style="padding-top:10px">
@@ -98,6 +98,7 @@
                 }
             </div>
         </div>
+    </form>
 
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog-centered modal-dialog" role="document">
@@ -119,7 +120,7 @@
             </div>
         </div>
         
-    </form>
+
 
 @section scripts
     {
